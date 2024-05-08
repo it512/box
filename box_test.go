@@ -5,26 +5,16 @@ import (
 	"testing"
 )
 
-type BoxKey struct {
-	Name string
-}
+var keyA = boxkey{"A"}
+var keyB = boxkey{"B"}
+var keyC = boxkey{"C"}
 
 func TestSelf(t *testing.T) {
-	b := New(context.Background())
-	b.Add("c", "c")
-	x := context.WithValue(b, BoxKey{"A"}, "b")
+	box := WithValue(context.Background(), keyA, "a")
 
-	if Self(x) != b {
-		t.Fail()
-	}
+	box1 := WithValue(box, keyB, "b")
 
-	Self(x).Add("z", "z")
-
-	if From[string](x, "c") != "c" {
-		t.Fail()
-	}
-
-	if From[string](x, "z") != "z" {
-		t.Fail()
+	if box1 != box {
+		t.Fatalf("box1 != box")
 	}
 }

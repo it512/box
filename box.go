@@ -9,25 +9,25 @@ type boxkey struct {
 	Name string
 }
 
-var self = boxkey{"$$__BOX_KEY__!!"}
+var self = boxkey{"$$__bOx_KeY__!!"}
 
-type BoxCtx struct {
+type boxCtx struct {
 	context.Context
 	m map[any]any
 }
 
-func New(parent context.Context) *BoxCtx {
-	return &BoxCtx{
+func new(parent context.Context) *boxCtx {
+	return &boxCtx{
 		Context: parent,
 		m:       make(map[any]any),
 	}
 }
 
-func (BoxCtx) String() string {
+func (boxCtx) String() string {
 	return "context.Box"
 }
 
-func (p *BoxCtx) Add(k, v any) *BoxCtx {
+func (p *boxCtx) put(k, v any) *boxCtx {
 	if k != nil && v != nil {
 		p.m[k] = v
 	}
@@ -39,7 +39,7 @@ func (p *BoxCtx) Add(k, v any) *BoxCtx {
 	return p
 }
 
-func (p *BoxCtx) Value(key any) any {
+func (p *boxCtx) Value(key any) any {
 	if key == self {
 		return p
 	}
@@ -56,6 +56,14 @@ func From[V any](ctx context.Context, key any) V {
 	return v.(V)
 }
 
-func Self(ctx context.Context) *BoxCtx {
-	return From[*BoxCtx](ctx, self)
+func WithValue(parent context.Context, key, val any) context.Context {
+	if ctx := parent.Value(self); ctx != nil {
+		b := ctx.(*boxCtx)
+		b.put(key, val)
+		return parent
+	}
+
+	b := new(parent)
+	b.put(key, val)
+	return b
 }
