@@ -5,11 +5,11 @@ import (
 	"reflect"
 )
 
-type Boxkey struct {
+type boxkey struct {
 	Name string
 }
 
-var self = Boxkey{"$$__BOX_KEY__!!"}
+var self = boxkey{"$$__BOX_KEY__!!"}
 
 type BoxCtx struct {
 	context.Context
