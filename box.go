@@ -60,9 +60,8 @@ func From[V any](ctx context.Context, key any) (v V, ok bool) {
 }
 
 func WithValue(parent context.Context, key, val any) context.Context {
-	if ctx := parent.Value(self); ctx != nil {
-		b := ctx.(*boxCtx)
-		b.put(key, val)
+	if box, ok := From[*boxCtx](parent, self); ok {
+		box.put(key, val)
 		return parent
 	}
 
