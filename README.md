@@ -40,9 +40,6 @@ func WithValue(parent context.Context, key, val any) context.Context {
 
 可以使用context.Value直接获取，box 也提供了一个范型的From方法,用于方便获取.  
 ``` golang
-x:=box.From[string](bCtx, "x")
+x , ok := box.From[string](bCtx, "x")
 ```
-
-**注意**
-如果使用box.From获取元素，当value为nil时，会导致panic
 
