@@ -20,15 +20,12 @@ c, f := context.WithCancel(bCtx)
 ```
 
 **注意**
-box.WithValue 的返回值遵循以下规则
-1. 首先在parent中查找是否存在boxCtx，如果存在，则增加key，val至boxCtx，返回 **parent**
-2. 如果parent中不存在boxCtx，则创建新的boxCtx，在其增加key，value，返回 **新建的boxCtx**
+box.WithValue 方法定义为：在已经存在的boxCtx中增加key，value，如果boxCtx不存在，则创建
 
 ``` golang
 func WithValue(parent context.Context, key, val any) context.Context {
-	if ctx := parent.Value(self); ctx != nil {
-		b := ctx.(*boxCtx)
-		b.put(key, val)
+	if box, ok := From[*boxCtx](parent, self); ok {
+		box.put(key, val)
 		return parent
 	}
 
