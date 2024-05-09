@@ -6,8 +6,6 @@
 
 ## 用法
 
-创建和加入
-
 保持和标准库风格一致，box也采用WithValue方法加入元素  
 ``` golang
 bCtx:=box.WithWalue(context.Background(), "a", "a")
@@ -39,8 +37,6 @@ func WithValue(parent context.Context, key, val any) context.Context {
 	return b
 }
 ```
-
-获取
 
 可以使用context.Value直接获取，box 也提供了一个范型的From方法,用于方便获取.  
 ``` golang

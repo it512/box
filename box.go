@@ -51,9 +51,12 @@ func (p *boxCtx) Value(key any) any {
 	return p.Context.Value(key)
 }
 
-func From[V any](ctx context.Context, key any) V {
-	v := ctx.Value(key)
-	return v.(V)
+func From[V any](ctx context.Context, key any) (v V, ok bool) {
+	val := ctx.Value(key)
+	if val == nil {
+		return
+	}
+	return val.(V), true
 }
 
 func WithValue(parent context.Context, key, val any) context.Context {
