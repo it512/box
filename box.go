@@ -2,7 +2,6 @@ package box
 
 import (
 	"context"
-	"reflect"
 )
 
 type boxkey struct {
@@ -30,10 +29,6 @@ func (boxCtx) String() string {
 func (p *boxCtx) put(k, v any) *boxCtx {
 	if k != nil && v != nil {
 		p.m[k] = v
-	}
-
-	if !reflect.TypeOf(k).Comparable() {
-		panic("key is not comparable")
 	}
 
 	return p
