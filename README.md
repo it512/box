@@ -35,8 +35,12 @@ func WithValue(parent context.Context, key, val any) context.Context {
 }
 ```
 
-可以使用context.Value直接获取，box 也提供了一个范型的From方法,用于方便获取.  
+可以使用context.Value直接获取，box 也提供了一个范型的From方法，用于方便获取  
 ``` golang
 x , ok := box.From[string](bCtx, "x")
 ```
+box.From方法兼容context.Value
 
+## 最佳实践
+
+尽量将boxCtx放置在context树的最上层
