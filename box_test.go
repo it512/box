@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-var keyA = boxkey{"A"}
-var keyB = boxkey{"B"}
-var keyC = boxkey{"C"}
+var keyA = BoxKey{"A"}
+var keyB = BoxKey{"B"}
+var keyC = BoxKey{"C"}
 
 func TestSelf(t *testing.T) {
 	box := WithValue(context.Background(), keyA, "a")
