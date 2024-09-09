@@ -2,13 +2,19 @@ package box
 
 import (
 	"context"
+	"math/rand/v2"
 )
 
 type BoxKey struct {
-	Key string
+	Key int64
 }
 
-var self = &BoxKey{"$$__bOx_KeY__!!"}
+func RndKey() BoxKey {
+
+	return BoxKey{
+		Key: rand.Int64(),
+	}
+}
 
 type BoxCtx struct {
 	context.Context
@@ -38,10 +44,6 @@ func (p *BoxCtx) Put(k, v any) *BoxCtx {
 }
 
 func (p *BoxCtx) Value(key any) any {
-	if key == self {
-		return p
-	}
-
 	if v, ok := p.m[key]; ok {
 		return v
 	}
@@ -62,15 +64,4 @@ func MustFrom[V any](ctx context.Context, key any) V {
 		return v
 	}
 	panic("key is not exsit")
-}
-
-func WithValue(parent context.Context, key, val any) context.Context {
-	if box, ok := From[*BoxCtx](parent, self); ok {
-		box.Put(key, val)
-		return parent
-	}
-
-	b := New(parent)
-	b.Put(key, val)
-	return b
 }
