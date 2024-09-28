@@ -10,7 +10,6 @@ type BoxKey struct {
 }
 
 func RndKey() BoxKey {
-
 	return BoxKey{
 		Key: rand.Int64(),
 	}
