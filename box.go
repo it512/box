@@ -20,11 +20,11 @@ type BoxCtx struct {
 	m map[any]any
 }
 
-func Default() *BoxCtx {
-	return New(context.Background())
+func Background() *BoxCtx {
+	return WithContext(context.Background())
 }
 
-func New(parent context.Context) *BoxCtx {
+func WithContext(parent context.Context) *BoxCtx {
 	return &BoxCtx{
 		Context: parent,
 		m:       make(map[any]any),
